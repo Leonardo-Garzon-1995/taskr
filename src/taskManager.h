@@ -1,33 +1,34 @@
-#pragma once
+#pragma once 
 #include <string>
 #include <vector>
+#include "task.h"
 
-// enum class: scoped, type-safe. You cant accidentally compare priority to integer
+class TaskManager {
+    public:
+        explicit TaskManager(const std::string& filepath);
 
-enum class Priority {LOW, MEDIUM, HIGH};
+        void load();
+        void save();
 
-// inline -> makes safer to define a function in a header, and avoids linker errors in multiple files
-inline std::string priorityToString(Priority p) {
-    switch (p) {
-        case Priority::LOW: return "LOW";
-        case Priority::MEDIUM: return "MEDIUM";
-        case Priority::HIGH: return "HIGH";
-    }
+        void add(
+            const std::string& title,
+            Priority priority,
+            const std::string& deadline,
+            const std::vector<std::string>& tags
+        );
 
-    return "LOW";
-}
+        void list() const;
+        void filter(const std::string& tag) const;
+        bool markDone(int id);
+        bool remove(int id);
+    
+    private:
+        std::string filepath_;
+        std::vector<Task> tasks_;
+        int nextId_ { 1 };
 
-inline Priority priorityFromString(const std::string& s) {
-    if (s == "HIGH") return Priority::HIGH;
-    if (s == "MEDIUM") return Priority::MEDIUM;
-    return Priority::LOW;
-}
+        void printTask(const Task& t) const;
 
-struct Task {
-    int id { 0 };
-    std::string title;
-    Priority priority { Priority::MEDIUM };
-    std::string deadline;
-    std::vector<std::string> tags;
-    bool done { false }; 
+        static std::string joinTags(const std::vector<std::string>& tags);
+        static std::vector<std::string> splitTags(const std::string& s);
 };
