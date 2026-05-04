@@ -8,7 +8,7 @@ class TaskManager {
         explicit TaskManager(const std::string& filepath);
 
         void load();
-        void save();
+        void save() const;
 
         void add(
             const std::string& title,

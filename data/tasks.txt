@@ -1,0 +1,2 @@
+1|walk dog|LOW||chores|0
+2|Do exercise|HIGH|2026-05-05|sports|0
