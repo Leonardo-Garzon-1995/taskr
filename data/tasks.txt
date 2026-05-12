@@ -1,2 +1,3 @@
-1|walk dog|LOW||chores|0
-2|Do exercise|HIGH|2026-05-05|sports|0
+1|Pasear al perro|HIGH||fun|0
+3|tareas|MEDIUM|2026-05-12|chores|0
+4|lavar ropa|HIGH|2026-05-18|chores|0

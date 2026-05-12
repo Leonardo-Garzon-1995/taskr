@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "taskManager.h"
+#include <filesystem>
 
 static void printUsage() {
     std::cout <<
@@ -26,9 +27,10 @@ static bool parseInt(const std::string& s, int& out) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) { printUsage(); }
-
+    if (argc < 2) { printUsage(); return 1; }\
+    std::filesystem::create_directories("data");
     TaskManager mgr("data/tasks.txt");
+    
     mgr.load();
 
     std::string cmd { argv[1] };
@@ -80,12 +82,13 @@ int main(int argc, char* argv[]) {
     } else if (cmd == "filter") {
         if (argc < 3) { std::cerr << "error: missing tag\n"; return 1; }
         mgr.filter(argv[2]);
+    } else if (cmd == "clear") {
+        mgr.clearAll();
     } else {
         std::cerr << "unknown command: " << cmd << "\n";
         printUsage();
         return 1;
     }
-
 
     return 0;
 
