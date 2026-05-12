@@ -21,6 +21,7 @@ class TaskManager {
         void filter(const std::string& tag) const;
         bool markDone(int id);
         bool remove(int id);
+        bool clearAll();
     
     private:
         std::string filepath_;

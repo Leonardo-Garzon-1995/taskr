@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 
+
 TaskManager::TaskManager(const std::string& filepath) 
     :filepath_(filepath)
 {}
@@ -122,7 +123,7 @@ bool TaskManager::remove(int id) {
 
 void TaskManager::printTask(const Task& t) const {
     // Done status
-    std::cout << (t.done ? "[✓]" : "[]");
+    std::cout << (t.done ? "[x]" : "[ ]");
 
     // Priority badge
     std::cout << " [" << priorityToString(t.priority) << "]";
@@ -143,6 +144,25 @@ void TaskManager::printTask(const Task& t) const {
     }
 
     std::cout << '\n';
+}
+
+bool TaskManager::clearAll() {
+    char confirm {};
+    std::cout << "Are you sure you want to clear all tasks? This action cannot be undone. (y/n): ";
+
+    if (!(std::cin >> confirm)) {
+        std::cerr << "error: could not read confirmation\n";
+        return false;
+    }
+
+    if (confirm == 'y' || confirm == 'Y') {
+        tasks_.clear();
+        save();
+        std::cout << "All tasks cleared.\n";
+        return true;
+    }
+
+    return false;
 }
 
 // SERALIZATION HELPERS
